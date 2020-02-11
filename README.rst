@@ -15,4 +15,6 @@ Install
 Run
 ---
 
-`make run`
+Note: xlsx file should contain spreadsheet called "Data"
+
+``OPTIONS="--data_path=\"PATH_TO_XLSX_FILE\" --out_path=\"PATH_TO_OUTPUT_CSV_FILE\" --key_product_idx=INDEX_OF_KEY_PRODUCT" make run``

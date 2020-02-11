@@ -24,9 +24,9 @@ install-dependency:
 	@echo "  > Install dependency"
 	@pip install -r requirements.txt
 
-## run: start magic
+## run: start magic OPTIONS=--data_path="./data/Python Exam (1).xlsx" --out_path="./data/out.csv" --key_product_idx=1
 run:
-	python -m wilcoxon_signed_rank_test --data_path="./data/Python Exam (1).xlsx" --out_path="./data/out.csv" --key_product_idx=1
+	python -m wilcoxon_signed_rank_test ${OPTIONS}
 
 .PHONY: help
 all: help
