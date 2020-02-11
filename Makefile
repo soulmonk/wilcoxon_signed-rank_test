@@ -24,6 +24,10 @@ install-dependency:
 	@echo "  > Install dependency"
 	@pip install -r requirements.txt
 
+## run: start magic
+run:
+	python -m wilcoxon_signed_rank_test --data_path="./data/Python Exam (1).xlsx" --out_path="./data/out.csv" --key_product_idx=1
+
 .PHONY: help
 all: help
 help: Makefile

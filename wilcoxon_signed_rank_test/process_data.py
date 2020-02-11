@@ -1,3 +1,6 @@
+import itertools
+
+
 def sign(x):
     return x and (1, -1)[x < 0]
 
@@ -19,7 +22,7 @@ def map_rank(row, rank_data):
     return row
 
 
-def process_data(data, product_key_idx, compare_idx):
+def test_statistic(data, product_key_idx, compare_idx):
     data_with_sign = []
 
     # calculate abs and sign
@@ -46,6 +49,45 @@ def process_data(data, product_key_idx, compare_idx):
 
     # calc test statistic W
     sign_ranks = list(item["sign_rank"] for item in data_with_rank)
-    test_statistic = sum(sign_ranks)
 
-    return test_statistic
+    return sum(sign_ranks)
+
+
+def permutation(data, columns, offset):
+    hashes = {}
+    permutation_column = ['permutation']
+
+    # skip first column (will compare with)
+    for idx, column in enumerate(list(columns[1:]), start=offset + 1):
+        hashes[column] = {}
+
+        for row in data:
+            hashes[column][row[idx]] = 1
+
+    result = []
+    for row in data:
+        perm = []
+        for idx, column in enumerate(columns[1:], start=offset + 1):
+            if row[offset] in hashes[column]:
+                perm.append(column)
+        result.append(list(row) + [",".join(perm)])
+
+    return permutation_column, result
+
+
+def weighting(data, columns, offset):
+
+    columns_combinations = list(itertools.combinations(columns, 2))
+    column_names = list(map(lambda x: "W_" + "_".join(x), columns_combinations))
+    columns_indexes = {}
+    for idx, column in enumerate(columns, start=offset):
+        columns_indexes[column] = idx
+
+    result = []
+    for row in data:
+        w = []
+        for keys in columns_combinations:
+            w.append((row[columns_indexes[keys[0]]] + row[columns_indexes[keys[1]]]) / 2)
+        result.append(list(row) + w)
+
+    return column_names, result
