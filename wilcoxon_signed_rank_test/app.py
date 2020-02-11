@@ -16,10 +16,12 @@ def run():
     product_key = names[args.key_product_idx]
     compare_with = names[args.key_product_idx + 1:]
 
-    print(f'names: {names}, data[0]: {data[0]}')
     print(f'product_key: {product_key}, compare_with: {compare_with} ')
+    print(f'rows in data: {len(data)}')
 
-    process_data(data, args.key_product_idx, args.key_product_idx + 1)
+    for idx, row in enumerate(compare_with, start=args.key_product_idx + 1):
+        test_statistic = process_data(data, args.key_product_idx, idx)
+        print(f'test statistic between {product_key} and {row} equal {abs(test_statistic)}')
 
     return 0
 
