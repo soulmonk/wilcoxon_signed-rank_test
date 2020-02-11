@@ -6,18 +6,13 @@ def load_data(path):
     sheet = workbook.get_sheet_by_name('Data')
 
     data = []
+
+    names = list(sheet.iter_rows(min_row=1, max_row=1, min_col=1, values_only=True))[0]
+
+    # todo for vs list()
     for row in sheet.iter_rows(min_row=2,
                                min_col=1,
-                               max_col=7,
                                values_only=True):
-        data.append({
-            "customer": row[0],
-            48806: row[1],
-            47106: row[2],
-            47287: row[3],
-            48020: row[4],
-            48863: row[5],
-            50546: row[6]
-        })
-    return data
+        data.append(row)
+    return names, data
 
