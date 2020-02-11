@@ -1,6 +1,3 @@
-import math
-
-
 def sign(x):
     return x and (1, -1)[x < 0]
 
@@ -14,14 +11,6 @@ def ranks(arr):
             result[row["abs"]] = (prev_idx + 1 + idx) / 2
             prev_idx = idx
     return result
-
-
-def mean(arr):
-    return sum(arr) / len(arr)
-
-
-def std(arr):
-    return sum(arr) / len(arr)
 
 
 def map_rank(row, rank_data):
@@ -58,19 +47,5 @@ def process_data(data, product_key_idx, compare_idx):
     # calc test statistic W
     sign_ranks = list(item["sign_rank"] for item in data_with_rank)
     test_statistic = sum(sign_ranks)
-    positive_w = sum(list((filter(lambda x: x > 0, sign_ranks))))
-    negative_w = sum(list((filter(lambda x: x < 0, sign_ranks))))
-
-    n = len(sign_ranks)
-    mw = n * (n + 1) / 4
-    sigw = math.sqrt((n * (n + 1) * (2 * n + 1)) / 24)
-
-    zstat = (positive_w - mw) / sigw
-
-    print(f'test statistic W: {test_statistic}, '
-          f'positive W: {positive_w}, '
-          f'negative W: {negative_w}, '
-          f'n: {n}, mw: {mw}, sigw: {sigw} '
-          f'z-stat: {zstat}')
 
     return test_statistic
